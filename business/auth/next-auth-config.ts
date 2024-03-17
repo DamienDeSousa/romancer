@@ -1,20 +1,20 @@
-import { NextAuthOptions } from 'next-auth'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
+import { NextAuthOptions } from 'next-auth'
+import GoogleProvider from 'next-auth/providers/google'
 import clientPromise from '../db/connect'
-import type { Adapter } from '@auth/core/adapters'
 
 export const authOptions: NextAuthOptions = {
   // see https://stackoverflow.com/questions/74089665/next-auth-credentials-provider-authorize-type-error
   // @ts-expect-error
   adapter: MongoDBAdapter(clientPromise),
-  /*providers: [
+  providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   session: { strategy: 'jwt' },
-  callbacks: {
+  /*callbacks: {
     // more information on params https://next-auth.js.org/configuration/callbacks#sign-in-callback
     async signIn({ user }) {
       await connectDB()
