@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Merriweather } from 'next/font/google'
+import { Merriweather } from 'next/font/google'
 import './globals.css'
 
 const inter = Merriweather({ subsets: ['latin'], weight: '400' })
