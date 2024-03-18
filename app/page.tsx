@@ -8,6 +8,8 @@ export default function Home() {
   const { data: session, status } = useSession()
 
   if (status === 'authenticated') {
+    // TODO: ajouter une barre de menu avec les fonctions de formattage de texte
+    // mettre l'éditeur de texte
     return (
       <div>
         <p>Signed in as {session?.user?.email}</p>
