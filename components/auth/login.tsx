@@ -5,10 +5,10 @@ import Image from 'next/image'
 import { Button } from '../ui/button'
 
 export const Login = () => {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
 
   if (status === 'authenticated') {
-    return <p>Signed in as {session?.user?.email}</p>
+    return null
   }
 
   return (
