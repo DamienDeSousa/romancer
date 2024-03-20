@@ -1,5 +1,6 @@
 'use client'
 
+import { Page } from '@/components/editor/page'
 import { Landing } from '@/components/landing/landing'
 import { Button } from '@/components/ui/button'
 import { signOut, useSession } from 'next-auth/react'
@@ -11,9 +12,12 @@ export default function Home() {
     // TODO: ajouter une barre de menu avec les fonctions de formattage de texte
     // mettre l'éditeur de texte
     return (
-      <div>
-        <p>Signed in as {session?.user?.email}</p>
-        <Button onClick={() => signOut()}>signout</Button>
+      <div className="h-full w-full flex flex-col items-center p-6 gap-6">
+        <div>
+          <p>Signed in as {session?.user?.email}</p>
+          <Button onClick={() => signOut()}>signout</Button>
+        </div>
+        <Page />
       </div>
     )
   }

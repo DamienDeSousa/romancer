@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <NextAuthProvider>
         <body
-          className={`${inter.className} bg-[#FAFAFA] h-screen w-screen text-lg`}
+          className={`${inter.className} bg-[#f7f5f3] min-h-screen min-w-screen text-lg`}
         >
           {children}
         </body>
@@ -27,3 +27,5 @@ export default function RootLayout({
     </html>
   )
 }
+
+// #E3DBD4
