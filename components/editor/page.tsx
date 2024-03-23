@@ -1,6 +1,11 @@
 import { Editor, EditorState } from 'draft-js'
-import 'draft-js/dist/Draft.css'
-import { useState } from 'react'
+import { stateToHTML } from 'draft-js-export-html'
+//import 'draft-js/dist/Draft.css'
+import { useEffect, useRef, useState } from 'react'
+
+const editorContentToHTML = (editorState: EditorState) => {
+  return stateToHTML(editorState.getCurrentContent())
+}
 
 /**
  * Représente une feuille d'écriture.
@@ -36,10 +41,35 @@ export const Page = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty(),
   )
+  const editorRef = useRef<HTMLDivElement>(null)
+  const ref = useRef<Editor>(null)
+
+  useEffect(() => {
+    calculateEditorHeight()
+  }, [editorState])
+
+  const calculateEditorHeight = () => {
+    if (editorRef.current && ref.current) {
+      const contentHeight = ref.current.editor?.offsetHeight || 0
+      const containerHeight = editorRef.current.offsetHeight
+      const style = getComputedStyle(editorRef.current)
+      const paddingTop = parseInt(style.paddingTop, 10)
+      const paddingBottom = parseInt(style.paddingBottom, 10)
+
+      if (contentHeight + paddingTop + paddingBottom >= containerHeight) {
+        console.log('new page')
+      }
+    }
+  }
 
   return (
-    <div className="w-[43.75rem] h-[65.625rem] p-6 bg-white shadow-xl text-base">
-      <Editor editorState={editorState} onChange={setEditorState} />
+    <div>
+      <div
+        ref={editorRef}
+        className="w-[44rem] h-[66rem] p-6 bg-white shadow-xl text-base overflow-hidden"
+      >
+        <Editor ref={ref} editorState={editorState} onChange={setEditorState} />
+      </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { Page } from '@/components/editor/page'
+import { PageManager } from '@/components/editor/page-manager'
 import { Landing } from '@/components/landing/landing'
 import { Button } from '@/components/ui/button'
 import { signOut, useSession } from 'next-auth/react'
@@ -16,7 +16,8 @@ export default function Home() {
           <p>Signed in as {session?.user?.email}</p>
           <Button onClick={() => signOut()}>signout</Button>
         </div>
-        <Page />
+        {/* TODO: créer une nouvelle feuille lorsque le texte dépasse la feuille actuelle */}
+        <PageManager />
       </div>
     )
   }
