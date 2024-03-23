@@ -1,11 +1,5 @@
 import { Editor, EditorState } from 'draft-js'
-import { stateToHTML } from 'draft-js-export-html'
-//import 'draft-js/dist/Draft.css'
 import { useEffect, useRef, useState } from 'react'
-
-const editorContentToHTML = (editorState: EditorState) => {
-  return stateToHTML(editorState.getCurrentContent())
-}
 
 /**
  * Représente une feuille d'écriture.
