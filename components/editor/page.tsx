@@ -61,6 +61,7 @@ export const Page = () => {
       <div
         ref={editorRef}
         className="w-[44rem] h-[66rem] p-6 bg-white shadow-xl text-base overflow-hidden"
+        onClick={() => ref.current?.focus()}
       >
         <Editor ref={ref} editorState={editorState} onChange={setEditorState} />
       </div>
