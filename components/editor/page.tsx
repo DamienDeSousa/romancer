@@ -1,6 +1,11 @@
-import { Editor, EditorState } from 'draft-js'
-import { useEffect, useRef, useState } from 'react'
+import { EditorState } from 'prosemirror-state'
+import { EditorView } from 'prosemirror-view'
+import { useEffect, useRef } from 'react'
 
+interface PageProps {
+  editorState: EditorState
+  onAddPage: () => void
+}
 /**
  * Représente une feuille d'écriture.
  *
@@ -31,40 +36,49 @@ import { useEffect, useRef, useState } from 'react'
  *  - poche: 24 à 48 pixels
  *  - Trade Paperback: 150 à 300 pixels
  */
-export const Page = () => {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty(),
-  )
-  const editorRef = useRef<HTMLDivElement>(null)
-  const ref = useRef<Editor>(null)
+export const Page = ({ editorState, onAddPage }: PageProps) => {
+  const pageRef = useRef<HTMLDivElement>(null)
+  // const [editorView, setEditorView] = useState<EditorView | null>(null)
 
   useEffect(() => {
-    calculateEditorHeight()
-  }, [editorState])
+    if (!pageRef.current) return
 
-  const calculateEditorHeight = () => {
-    if (editorRef.current && ref.current) {
-      const contentHeight = ref.current.editor?.offsetHeight || 0
-      const containerHeight = editorRef.current.offsetHeight
-      const style = getComputedStyle(editorRef.current)
-      const paddingTop = parseInt(style.paddingTop, 10)
-      const paddingBottom = parseInt(style.paddingBottom, 10)
+    const view = new EditorView(pageRef.current, {
+      state: editorState,
+      dispatchTransaction(transaction) {
+        const newState = view.state.apply(transaction)
+        view.updateState(newState)
 
-      if (contentHeight + paddingTop + paddingBottom >= containerHeight) {
-        console.log('new page')
-      }
+        const style = getComputedStyle(pageRef.current!)
+        const paddingTop = parseInt(style.paddingTop, 10)
+        const paddingBottom = parseInt(style.paddingBottom, 10)
+
+        const contentContainer = pageRef.current!.firstChild as HTMLElement
+        const contentHeight = contentContainer.scrollHeight
+
+        if (
+          contentHeight + paddingBottom + paddingTop >=
+          pageRef.current!.scrollHeight
+        ) {
+          onAddPage()
+        }
+      },
+    })
+
+    return () => {
+      view.destroy()
     }
-  }
+  }, [])
 
   return (
-    <div>
-      <div
-        ref={editorRef}
-        className="w-[44rem] h-[66rem] p-6 bg-white shadow-xl text-base overflow-hidden"
-        onClick={() => ref.current?.focus()}
-      >
-        <Editor ref={ref} editorState={editorState} onChange={setEditorState} />
-      </div>
-    </div>
+    <div
+      ref={pageRef}
+      className="w-[44rem] h-[66rem] p-6 bg-white shadow-xl text-base overflow-hidden"
+      onClick={() => {
+        if (pageRef.current?.firstChild) {
+          ;(pageRef.current!.firstChild as HTMLElement)!.focus()
+        }
+      }}
+    />
   )
 }
