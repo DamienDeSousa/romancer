@@ -10,7 +10,6 @@ export default function Home() {
 
   if (status === 'authenticated') {
     // TODO: ajouter une barre de menu avec les fonctions de formattage de texte
-    // mettre l'éditeur de texte
     return (
       <div className="h-full w-full flex flex-col items-center p-6 gap-6">
         <div>

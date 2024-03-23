@@ -38,7 +38,7 @@ export const Page = () => {
   )
 
   return (
-    <div className="w-[576px] h-[864px] p-[24px] bg-white shadow-xl">
+    <div className="w-[43.75rem] h-[65.625rem] p-6 bg-white shadow-xl text-base">
       <Editor editorState={editorState} onChange={setEditorState} />
     </div>
   )
