@@ -1,6 +1,6 @@
 'use client'
 
-import { PageManager } from '@/components/editor/page-manager'
+import { ProseManager } from '@/components/editor/prose-manager'
 import { Landing } from '@/components/landing/landing'
 import { Button } from '@/components/ui/button'
 import { signOut, useSession } from 'next-auth/react'
@@ -17,7 +17,7 @@ export default function Home() {
           <Button onClick={() => signOut()}>signout</Button>
         </div>
         {/* TODO: créer une nouvelle feuille lorsque le texte dépasse la feuille actuelle */}
-        <PageManager />
+        <ProseManager />
       </div>
     )
   }
